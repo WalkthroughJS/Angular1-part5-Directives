@@ -44,7 +44,7 @@ Now, let's go back to the DOM and put this new directive in here. Let's remove t
 
 You can actually pass values into directives from the parent controller, which in this case is `myFirstController`. You have the ability to pass three different things into directives. You can pass a "string" (denoted by "@"), which is only from the controller to the directive, a scope function (denoted by "&"), which you declare in the controller and call in the directive, or a two way binding for a scope variable in the parent controller (denoted by "=") that you can pass back and forth between the controller and the directive.
 
-To prove that, let's start by passing a string into the directive. To do that, let's go into the directive and add another key inside the return object called `scope`. This key is an object and labels values from the controller that it expects to see as keys inside its own object. That may be hard to picture, so lets write it out. Inside the ```text <my-first-directive></my-first-directive>```, let's put an attribute of `string="stuff"` since we feel all arbitrary today. It will look like: ```text <my-first-directive string="stuff"></my-first-directive>```
+To prove that, let's start by passing a string into the directive. To do that, let's go into the directive and add another key inside the return object called `scope`. As soon as you add this `scope` key, you shut this directive off from being able to freely use the parent controller's scope variables. If you want to use a scope variable from the parent controller, you have to pass it in via the "=" operator in the scope key. This key is an object and labels values from the controller that it expects to see as keys inside its own object. That may be hard to picture, so lets write it out. Inside the ```text <my-first-directive></my-first-directive>```, let's put an attribute of `string="stuff"` since we feel all arbitrary today. It will look like: ```text <my-first-directive string="stuff"></my-first-directive>```
 
 Now, let's go into `app.directive` and add our scope key to our return object. To the `scope` object, we're going to add a key called `string`, since that's what we called it inside the element, then we're going to put the value as "@", since it is just a string, like was mentioned a couple of paragraphs back. Last thing, inside the template key of the directive's return object, we're going to put ```text <p>{{string}}</p>``` just to make it show on the page. It's going to look like this now: 
 ```text
@@ -111,3 +111,27 @@ app.controller('myFirstController', function($scope, $http, myFirstFactory) {
   }
 });
 ```
+Now, let's go to `app.directive` and add a function to the scope object. Remember, the way to do that is to put the key as the name of the function and the value as "&" to denote that the directive should expect a function to be passed in. Let's call this function `alert`. Inside the template, lets add a button with an `ng-click` that will fire `alert()` when it is clicked. Your directive should now look like this: 
+```text
+app.directive('myFirstDirective', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      binder: '=',
+      string: '@',
+      alert: '&'
+    },
+    template: '<h1>Hello World</h1>\n<p>string: {{string}}</p>\n<p>binder: {{binder}}</p>\n <button ng-click="alert()">Alert</button>'
+  }
+});
+```
+The last thing we need to do is add it to the directive so that the controller can pass in `directiveAlert` into the `alert` attribute. Your element should look like this:
+```text
+<my-first-directive string="stuff" binder="twoWay" alert="directiveAlert()"></my-first-directive>
+```
+
+Now after you save and refresh the page, you should be able to click the button and see the alert.
+
+WOW! We went over a lot in this lesson. This was one of the things that took me the longest to get used to using inside Angular, so don't be overwhilemed if it doesn't make sense or you can't get it to work. Feel free to email me if it doesn't. I'd be more than happy to help.
+
+Unsurprisingly, though, we're stll not done with directives. In the next lesson, we're going to dive deeper into the idea of isolate scope, which we have right now, but we didn't even really know we had. Exciting, right? See you in the next lesson!
