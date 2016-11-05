@@ -61,7 +61,7 @@ app.directive('myFirstDirective', function() {
 
 After you save and refresh the page, you'll notice that the string "stuff" shows up on the page. Awesome! So we were able to pass a string into a directive. Let's move on to passing a two-way data binding scope variable into the directive.
 
-Let' start by adding another key to the scope object in the directive. Let's call it `binder`, then let's add "=" as the value so we can make the directive expect a scope variable from the parent controller. 
+Let' start by adding another key to the scope object in the directive. Let's call it `binder`, then let's add "=" as the value so we can make the directive expect a scope variable from the parent controller. I also added `\n` (new line) characters to make it a little easier to read.
 ```text
 app.directive('myFirstDirective', function() {
   return {
@@ -70,7 +70,7 @@ app.directive('myFirstDirective', function() {
       binder: '=',
       string: '@'
     },
-    template: '<h1>Hello World</h1> <p>{{string}}</p>'
+    template: '<h1>Hello World</h1>\n<p>string: {{string}}</p>\n<p>binder: {{binder}}</p>'
   }
 });
 ```
