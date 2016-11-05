@@ -46,7 +46,7 @@ You can actually pass values into directives from the parent controller, which i
 
 To prove that, let's start by passing a string into the directive. To do that, let's go into the directive and add another key inside the return object called `scope`. This key is an object and labels values from the controller that it expects to see as keys inside its own object. That may be hard to picture, so lets write it out. Inside the ```text <my-first-directive></my-first-directive>```, let's put an attribute of `string="stuff"` since we feel all arbitrary today. It will look like: ```text <my-first-directive string="stuff"></my-first-directive>```
 
-Now, let's go into `app.directive` and add our scope key to our return object. To the `scope` object, we're going to add a key called `string`, since that's what we called it inside the element, then we're going to put the value as "@", since it is just a string, like was mentioned a couple of paragraphs back. It's going to look like this now: 
+Now, let's go into `app.directive` and add our scope key to our return object. To the `scope` object, we're going to add a key called `string`, since that's what we called it inside the element, then we're going to put the value as "@", since it is just a string, like was mentioned a couple of paragraphs back. Last thing, inside the template key of the directive's return object, we're going to put ```text <p>{{string}}</p>``` just to make it show on the page. It's going to look like this now: 
 ```text
 app.directive('myFirstDirective', function() {
   return {
@@ -54,7 +54,41 @@ app.directive('myFirstDirective', function() {
     scope: {
       string: '@'
     },
-    template: '<h1>Hello World</h1> {{string}}'
+    template: '<h1>Hello World</h1> <p>{{string}}</p>'
   }
 });
+```
+
+After you save and refresh the page, you'll notice that the string "stuff" shows up on the page. Awesome! So we were able to pass a string into a directive. Let's move on to passing a two-way data binding scope variable into the directive.
+
+Let' start by adding another key to the scope object in the directive. Let's call it `binder`, then let's add "=" as the value so we can make the directive expect a scope variable from the parent controller. 
+```text
+app.directive('myFirstDirective', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      binder: '=',
+      string: '@'
+    },
+    template: '<h1>Hello World</h1> <p>{{string}}</p>'
+  }
+});
+```
+Now, let's go into the controller and add a scope variable called `twoWay` and assign it to a value of 3. 
+```text
+app.controller('myFirstController', function($scope, $http, myFirstFactory) {
+  $scope.makeAPIcall = function(character) {
+    myFirstFactory.getCharacter(character)
+     .then(function(api_response) {
+       console.log(api_response);
+       $scope.results = api_response.data.results;
+     });
+  }
+  $scope.twoWay = 2;
+});
+```
+
+From there, let's go back to the DOM and add `binder="twoWay"` to the `my-first-directive` element. It will look like this:
+```text
+<my-first-directive string="stuff" binder="twoWay"></my-first-directive>
 ```
