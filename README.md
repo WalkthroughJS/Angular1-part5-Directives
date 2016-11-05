@@ -92,3 +92,22 @@ From there, let's go back to the DOM and add `binder="twoWay"` to the `my-first-
 ```text
 <my-first-directive string="stuff" binder="twoWay"></my-first-directive>
 ```
+Now we see all the values output into the DOM, including the two-way binding value!
+
+The last thing we're going to do is pass in a function to alert something from inside the directive. Let's start by going to `app.controller` and adding another scope function. Let's call it `$scope.directiveAlert`. Let's just make it alert `$scope.twoWay`. It will look like this: 
+```text
+app.controller('myFirstController', function($scope, $http, myFirstFactory) {
+  $scope.makeAPIcall = function(character) {
+    myFirstFactory.getCharacter(character)
+     .then(function(api_response) {
+       console.log(api_response);
+       $scope.results = api_response.data.results;
+     });
+  }
+  $scope.twoWay = 3;
+
+  $scope.directiveAlert = function() {
+    alert($scope.twoWay);
+  }
+});
+```
