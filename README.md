@@ -40,8 +40,21 @@ app.factory('myFirstDirective', function() {
 
 Within the callback function, we're going to return an object. That object is going to have two key/value pairs in it. The first will be `restrict: 'E'` and the second will be ```text template: '<h1>Hello world</h1>'```. The `restrict: 'E'` key/value will make the DOM expect this to be an element, hence the "E", and the second key/value will make the element output ```text <h1>Hello world</h1>```
 
-Now, let's go back to the DOM and put this new directive in here. Let's remove the div with ``{{serviceValue}}`` and replace it with `<my-first-directive></my-first-directive>`. Note the camel-case to snake-case transition. This is the case with all directives that you name. It will be camel-case in your directive declaration and snake-case in your HTML. Now, let's save it and refresh the page. Now we see an `h1` of 'Hello world' on the page. You have officially created your first directive! Awesome! But alas, there's more to directives than just that.
+Now, let's go back to the DOM and put this new directive in here. Let's remove the div with ``{{serviceValue}}`` and replace it with ```text<my-first-directive></my-first-directive>```. Note the camel-case to snake-case transition. This is the case with all directives that you name. It will be camel-case in your directive declaration and snake-case in your HTML. Now, let's save it and refresh the page. Now we see an `h1` of 'Hello world' on the page. You have officially created your first directive! Awesome! But alas, there's more to directives than just that.
 
 You can actually pass values into directives from the parent controller, which in this case is `myFirstController`. You have the ability to pass three different things into directives. You can pass a "string" (denoted by "@"), which is only from the controller to the directive, a scope function (denoted by "&"), which you declare in the controller and call in the directive, or a two way binding for a scope variable in the parent controller (denoted by "=") that you can pass back and forth between the controller and the directive.
 
-To prove that, let's start by passing a string into the directive. To do that, let's go into the directive and add another key inside the return object called `scope`. This key is an object and labels values from the controller that it expects to see as keys inside its own object. That may be hard to picture, so lets write it out. Inside the ```text <my-first-directive></my-first-directive>```
+To prove that, let's start by passing a string into the directive. To do that, let's go into the directive and add another key inside the return object called `scope`. This key is an object and labels values from the controller that it expects to see as keys inside its own object. That may be hard to picture, so lets write it out. Inside the ```text <my-first-directive></my-first-directive>```, let's put an attribute of `string="stuff"` since we feel all arbitrary today. It will look like: ```text <my-first-directive string="stuff"></my-first-directive>```
+
+Now, let's go into `app.directive` and add our scope key to our return object. To the `scope` object, we're going to add a key called `string`, since that's what we called it inside the element, then we're going to put the value as "@", since it is just a string, like was mentioned a couple of paragraphs back. It's going to look like this now: 
+```text
+app.directive('myFirstDirective', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      string: '@'
+    },
+    template: '<h1>Hello World</h1> {{string}}'
+  }
+});
+```
