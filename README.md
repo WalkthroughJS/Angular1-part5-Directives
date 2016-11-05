@@ -39,3 +39,5 @@ app.factory('myFirstDirective', function() {
 ```
 
 Within the callback function, we're going to return an object. That object is going to have two key/value pairs in it. The first will be `restrict: 'E'` and the second will be ```text template: '<h1>Hello world</h1>'```. The `restrict: 'E'` key/value will make the DOM expect this to be an element, hence the "E", and the second key/value will make the element output ```text <h1>Hello world</h1>```
+
+Now, let's go back to the DOM and put this new directive in here. Let's remove the div with ``{{serviceValue}}`` and replace it with `<my-first-directive></my-first-directive>`. Note the camel-case to snake-case transition. This is the case with all directives that you name. It will be camel-case in your directive declaration and snake-case in your HTML. Now, let's save it and refresh the page. Now we see an `h1` of 'Hello world' on the page. 
