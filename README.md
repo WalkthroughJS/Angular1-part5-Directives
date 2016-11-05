@@ -84,7 +84,7 @@ app.controller('myFirstController', function($scope, $http, myFirstFactory) {
        $scope.results = api_response.data.results;
      });
   }
-  $scope.twoWay = 2;
+  $scope.twoWay = 3;
 });
 ```
 
