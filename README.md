@@ -1,4 +1,4 @@
-# Angular1-part5-Directives
+# Angular1-part5-Directives1
 
 So, in the last lesson, we talked about different types of services and how you can inject and implement them. In this lesson, though, we're going to talk about the illusive directive and what that is. Directives can manifest in many different ways, but you'll see them almost always either as an attribute within an element or an element itself. For example, `ng-repeat` and `ng-click` are both attribute directives. Element directives are usually used to imitate components or functional templates of some sort. You'll see what I mean when we get there. We may have to do this in a couple parts, though, so stay tuned.
 
