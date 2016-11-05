@@ -38,4 +38,4 @@ app.factory('myFirstDirective', function() {
 });
 ```
 
-Within the callback function, we're going to return an object. That object is going to have two key/value pairs in it. The first will be `restrict: 'E'` and the second will be ```text template: '<h1>Hello world</h1>'```
+Within the callback function, we're going to return an object. That object is going to have two key/value pairs in it. The first will be `restrict: 'E'` and the second will be ```text template: '<h1>Hello world</h1>'```. The `restrict: 'E'` key/value will make the DOM expect this to be an element, hence the "E", and the second key/value will make the element output ```text <h1>Hello world</h1>```
